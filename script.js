@@ -2,16 +2,18 @@ let current_mode = 'color'
 let selected_color = 'black'
 let current_color = selected_color
 
+const grid_container = document.querySelector(".grid-container")
+
 const rainbow_mode_button = document.querySelector('.rainbow-mode button')
 const color_mode_button = document.querySelector('.color-mode button')
+const eraser_mode_button = document.querySelector('.eraser-mode button')
+const clear_button = document.querySelector('.clear-grid')
 
 function colorTile(grid_tile, color){
     grid_tile.style.backgroundColor = color
 }
 
 function generateGrid(grid_size){
-    const grid_container = document.querySelector(".grid-container")
-
     for (let i = 0; i < (grid_size * grid_size); i++){
         const grid_tile = document.createElement("div")
         grid_tile.setAttribute('class', 'grid-element')
@@ -29,6 +31,7 @@ function tileHover(event){
     
     if (event.buttons == 1) {
         if (current_mode == 'rainbow') setRandomColor()
+        if (current_mode == 'eraser') current_color = 'white'
         colorTile(grid_tile, current_color)
     }
 }
@@ -36,6 +39,7 @@ function tileHover(event){
 function tileClick(event){
     grid_tile = event.target
     if (current_mode == 'rainbow') setRandomColor()
+    if (current_mode == 'eraser') current_color = 'white'
     colorTile(grid_tile, current_color)
 }
 
@@ -53,19 +57,32 @@ function initializeGridTiles(){
 }
 
 function changeMode(new_mode){
-    if (new_mode != 'color' && new_mode != 'rainbow') return
+    if (new_mode != 'color' && new_mode != 'rainbow' && new_mode != 'eraser') return
     if (current_mode == new_mode) return
     current_mode = new_mode
     
     if (current_mode == 'color') {
         color_mode_button.style.backgroundColor = 'black'
         rainbow_mode_button.style.backgroundColor = 'white'
+        eraser_mode_button.style.backgroundColor = 'white'
 
         current_color = selected_color
-    } else {
+    } else if (current_mode == 'rainbow') {
         color_mode_button.style.backgroundColor = 'white'
         rainbow_mode_button.style.backgroundColor = 'black'
+        eraser_mode_button.style.backgroundColor = 'white'
+    } else {
+        color_mode_button.style.backgroundColor = 'white'
+        rainbow_mode_button.style.backgroundColor = 'white'
+        eraser_mode_button.style.backgroundColor = 'black'
     }
+}
+
+function clearGrid(){
+    const grid_tiles = Array.from(grid_container.children)
+    grid_tiles.forEach((grid_tile) => {
+        grid_tile.style.backgroundColor = 'white'
+    })
 }
 
 generateGrid(16)
@@ -78,3 +95,9 @@ rainbow_mode_button.addEventListener('click', (event) => {
 color_mode_button.addEventListener('click', (event) => {
     changeMode(event.target.className)
 })
+
+eraser_mode_button.addEventListener('click', (event) => {
+    changeMode(event.target.className)
+})
+
+clear_button.addEventListener('click', () => clearGrid())
