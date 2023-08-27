@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Etch-a-Sketch</title>
+        <title>Pixel Draw</title>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
         <link rel="stylesheet" href="styles.css">
         <script src="script.js" defer></script>
     </head>
     <body>
-        <h1>ETCH-A-SKETCH</h1>
+        <h1>PIXEL DRAW</h1>
         <div class="main-container">
             <div class="settings-container">
-                <div class="color-selector">
-
-                </div>
+                <input class='color-selector' type="color" value="#000000">
                 <div class="color-mode">
                     COLOR MODE
                     <button class="color"></button>
@@ -32,8 +31,8 @@
                     <input class="size-slider" type="range" min="1" max="50" value="16">
                 </div>
             </div>
-            <div class="grid-container">
-            </div>
+            
+            <div class="grid-container"></div>
         </div>
     </body>
 </html>

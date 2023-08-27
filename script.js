@@ -12,6 +12,8 @@ const clear_button = document.querySelector('.clear-grid')
 const size_slider = document.querySelector('.size-slider')
 const slider_text = document.querySelector('.slider-div h4')
 
+const color_selector = document.querySelector('.color-selector')
+
 function colorTile(grid_tile, color){
     grid_tile.style.backgroundColor = color
 }
@@ -30,6 +32,11 @@ function generateGrid(grid_size){
 function setRandomColor(){
     rand_color = Math.floor(Math.random()*16777215).toString(16);
     current_color = `#${rand_color}`
+}
+
+function changeSelectedColor(new_color){
+    selected_color = new_color
+    if (current_mode == 'color') current_color = selected_color
 }
 
 function tileHover(event){
@@ -121,4 +128,8 @@ size_slider.addEventListener('change', () => {
 
 size_slider.addEventListener('input', () => {
     slider_text.innerHTML = `${size_slider.value} x ${size_slider.value}`
+})
+
+color_selector.addEventListener('input', () => {
+    changeSelectedColor(color_selector.value)
 })
