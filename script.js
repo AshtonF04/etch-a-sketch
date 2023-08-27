@@ -8,6 +8,7 @@ const rainbow_mode_button = document.querySelector('.rainbow-mode button')
 const color_mode_button = document.querySelector('.color-mode button')
 const eraser_mode_button = document.querySelector('.eraser-mode button')
 const clear_button = document.querySelector('.clear-grid')
+const undo_button = document.querySelector('.undo-action')
 
 const size_slider = document.querySelector('.size-slider')
 const slider_text = document.querySelector('.slider-div h4')
