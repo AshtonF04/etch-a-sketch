@@ -9,6 +9,9 @@ const color_mode_button = document.querySelector('.color-mode button')
 const eraser_mode_button = document.querySelector('.eraser-mode button')
 const clear_button = document.querySelector('.clear-grid')
 
+const size_slider = document.querySelector('.size-slider')
+const slider_text = document.querySelector('.slider-div h4')
+
 function colorTile(grid_tile, color){
     grid_tile.style.backgroundColor = color
 }
@@ -19,6 +22,9 @@ function generateGrid(grid_size){
         grid_tile.setAttribute('class', 'grid-element')
         grid_container.appendChild(grid_tile)
     }
+
+    grid_container.style.gridTemplateColumns = `repeat(${grid_size}, 1fr)`
+    initializeGridTiles()
 }
 
 function setRandomColor(){
@@ -85,8 +91,14 @@ function clearGrid(){
     })
 }
 
+function removeGrid(){
+    const grid_tiles = Array.from(grid_container.children)
+    grid_tiles.forEach((grid_tile) => {
+        grid_tile.remove()
+    })
+}
+
 generateGrid(16)
-initializeGridTiles()
 
 rainbow_mode_button.addEventListener('click', (event) => {
     changeMode(event.target.className)
@@ -101,3 +113,12 @@ eraser_mode_button.addEventListener('click', (event) => {
 })
 
 clear_button.addEventListener('click', () => clearGrid())
+
+size_slider.addEventListener('change', () => {
+    removeGrid()
+    generateGrid(parseInt(size_slider.value))
+})
+
+size_slider.addEventListener('input', () => {
+    slider_text.innerHTML = `${size_slider.value} x ${size_slider.value}`
+})
