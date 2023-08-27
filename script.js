@@ -1,3 +1,14 @@
+let current_mode = 'color'
+let selected_color = 'black'
+let current_color = selected_color
+
+const rainbow_mode_button = document.querySelector('.rainbow-mode button')
+const color_mode_button = document.querySelector('.color-mode button')
+
+function colorTile(grid_tile, color){
+    grid_tile.style.backgroundColor = color
+}
+
 function generateGrid(grid_size){
     const grid_container = document.querySelector(".grid-container")
 
@@ -8,22 +19,62 @@ function generateGrid(grid_size){
     }
 }
 
+function setRandomColor(){
+    rand_color = Math.floor(Math.random()*16777215).toString(16);
+    current_color = `#${rand_color}`
+}
+
+function tileHover(event){
+    grid_tile = event.target
+    
+    if (event.buttons == 1) {
+        if (current_mode == 'rainbow') setRandomColor()
+        colorTile(grid_tile, current_color)
+    }
+}
+
+function tileClick(event){
+    grid_tile = event.target
+    if (current_mode == 'rainbow') setRandomColor()
+    colorTile(grid_tile, current_color)
+}
+
 function initializeGridTiles(){
     const grid_tiles = Array.from(document.getElementsByClassName('grid-element'))
     grid_tiles.forEach((grid_tile) => {
         grid_tile.addEventListener('mouseenter', (event) => {
-            if (event.buttons == 1) {
-                grid_tile = event.target
-                grid_tile.style.backgroundColor = 'black'
-            }
+            tileHover(event)
         })
 
         grid_tile.addEventListener('click', (event) => {
-            grid_tile = event.target
-            grid_tile.style.backgroundColor = 'black'
+            tileClick(event)
         })
     })
 }
 
+function changeMode(new_mode){
+    if (new_mode != 'color' && new_mode != 'rainbow') return
+    if (current_mode == new_mode) return
+    current_mode = new_mode
+    
+    if (current_mode == 'color') {
+        color_mode_button.style.backgroundColor = 'black'
+        rainbow_mode_button.style.backgroundColor = 'white'
+
+        current_color = selected_color
+    } else {
+        color_mode_button.style.backgroundColor = 'white'
+        rainbow_mode_button.style.backgroundColor = 'black'
+    }
+}
+
 generateGrid(16)
 initializeGridTiles()
+
+rainbow_mode_button.addEventListener('click', (event) => {
+    changeMode(event.target.className)
+})
+
+color_mode_button.addEventListener('click', (event) => {
+    changeMode(event.target.className)
+})
