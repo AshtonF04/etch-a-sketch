@@ -1,2 +1,2 @@
-# etch-a-sketch
-Etch a Sketch web app developed using HTML, CSS, and JavaScript
+# pixel draw
+A web app for drawing pixel art developed using HTML, CSS, and JavaScritp
