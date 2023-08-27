@@ -169,6 +169,7 @@ h4{
 
 .grid-element{
     background-color: white;
+    border: 0.25px solid #EEEEEE;
 }
 
 .grid-element:hover{
