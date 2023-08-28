@@ -1,12 +1,13 @@
-let current_mode = 'color'
+let current_mode = 'pen'
 let selected_color = 'black'
 let current_color = selected_color
 
 const grid_container = document.querySelector(".grid-container")
 
 const rainbow_mode_button = document.querySelector('.rainbow-mode button')
-const color_mode_button = document.querySelector('.color-mode button')
+const pen_mode_button = document.querySelector('.pen-mode button')
 const eraser_mode_button = document.querySelector('.eraser-mode button')
+const fill_mode_button = document.querySelector('.fill-mode button')
 const clear_button = document.querySelector('.clear-grid')
 const undo_button = document.querySelector('.undo-action')
 
@@ -43,30 +44,53 @@ function setRandomColor(){
 
 function changeSelectedColor(new_color){
     selected_color = new_color
-    if (current_mode == 'color') current_color = selected_color
+    if (current_mode == 'pen' || current_mode == 'fill') current_color = selected_color
 }
 
 function tileHover(event){
     grid_tile = event.target
     
     if (event.buttons == 1) {
-        if (current_mode == 'rainbow') setRandomColor()
+        if (current_mode == 'pen'){
+            colorTile(grid_tile, current_color)
+        }
+        if (current_mode == 'fill') {
+            current_color = selected_color
+            const grid_tiles = Array.from(document.getElementsByClassName('grid-element'))
+            grid_tiles.forEach((grid_tile) => {
+                colorTile(grid_tile, current_color)
+            })
+        }
+        if (current_mode == 'rainbow'){
+            setRandomColor()
+            colorTile(grid_tile, current_color)
+        }
         if (current_mode == 'eraser') {
             eraseTile(grid_tile)
             return
         }
-        colorTile(grid_tile, current_color)
     }
 }
 
 function tileClick(event){
     grid_tile = event.target
-    if (current_mode == 'rainbow') setRandomColor()
+    if (current_mode == 'pen'){
+        colorTile(grid_tile, current_color)
+    }
+    if (current_mode == 'fill') {
+        const grid_tiles = Array.from(document.getElementsByClassName('grid-element'))
+        grid_tiles.forEach((grid_tile) => {
+            colorTile(grid_tile, current_color)
+        })
+    }
+    if (current_mode == 'rainbow'){
+        setRandomColor()
+        colorTile(grid_tile, current_color)
+    }
     if (current_mode == 'eraser') {
         eraseTile(grid_tile)
         return
     }
-    colorTile(grid_tile, current_color)
 }
 
 function initializeGridTiles(){
@@ -83,24 +107,25 @@ function initializeGridTiles(){
 }
 
 function changeMode(new_mode){
-    if (new_mode != 'color' && new_mode != 'rainbow' && new_mode != 'eraser') return
+    if (new_mode != 'pen' && new_mode != 'rainbow' && new_mode != 'eraser' && new_mode != 'fill') return
     if (current_mode == new_mode) return
     current_mode = new_mode
     
-    if (current_mode == 'color') {
-        color_mode_button.style.backgroundColor = 'black'
-        rainbow_mode_button.style.backgroundColor = 'white'
-        eraser_mode_button.style.backgroundColor = 'white'
+    pen_mode_button.style.backgroundColor = 'white'
+    rainbow_mode_button.style.backgroundColor = 'white'
+    eraser_mode_button.style.backgroundColor = 'white'
+    fill_mode_button.style.backgroundColor = 'white'
 
+    if (current_mode == 'pen') {
+        pen_mode_button.style.backgroundColor = 'black'
         current_color = selected_color
     } else if (current_mode == 'rainbow') {
-        color_mode_button.style.backgroundColor = 'white'
         rainbow_mode_button.style.backgroundColor = 'black'
-        eraser_mode_button.style.backgroundColor = 'white'
-    } else {
-        color_mode_button.style.backgroundColor = 'white'
-        rainbow_mode_button.style.backgroundColor = 'white'
+    } else if (current_mode == 'eraser'){
         eraser_mode_button.style.backgroundColor = 'black'
+    } else if (current_mode == 'fill'){
+        fill_mode_button.style.backgroundColor = 'black'
+        current_color = selected_color
     }
 }
 
@@ -124,11 +149,15 @@ rainbow_mode_button.addEventListener('click', (event) => {
     changeMode(event.target.className)
 })
 
-color_mode_button.addEventListener('click', (event) => {
+pen_mode_button.addEventListener('click', (event) => {
     changeMode(event.target.className)
 })
 
 eraser_mode_button.addEventListener('click', (event) => {
+    changeMode(event.target.className)
+})
+
+fill_mode_button.addEventListener('click', (event) => {
     changeMode(event.target.className)
 })
 

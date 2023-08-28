@@ -86,22 +86,41 @@ h1{
     transform: scale(1.1)
 }
 
-.color-mode{
+.pen-mode{
     display: flex;
     align-items: center;
 }
 
-.color-mode button{
+.pen-mode button{
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    margin-left: 35px;
+    margin-left: 39px;
     border: none;
     background-color: black;
     transition-duration: 0.3s;
 }
 
-.color-mode button:hover{
+.pen-mode button:hover{
+    transform: scale(1.1)
+}
+
+.fill-mode{
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.fill-mode button{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-left: 57px;
+    border: none;
+    transition-duration: 0.3s;
+}
+
+.fill-mode button:hover{
     transform: scale(1.1)
 }
 
