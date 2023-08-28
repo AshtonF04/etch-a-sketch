@@ -17,6 +17,12 @@ const color_selector = document.querySelector('.color-selector')
 
 function colorTile(grid_tile, color){
     grid_tile.style.backgroundColor = color
+    grid_tile.style.border = "none"
+}
+
+function eraseTile(grid_tile){
+    grid_tile.style.backgroundColor = 'white'
+    grid_tile.style.border = ".25px solid #EEEEEE"
 }
 
 function generateGrid(grid_size){
@@ -45,7 +51,10 @@ function tileHover(event){
     
     if (event.buttons == 1) {
         if (current_mode == 'rainbow') setRandomColor()
-        if (current_mode == 'eraser') current_color = 'white'
+        if (current_mode == 'eraser') {
+            eraseTile(grid_tile)
+            return
+        }
         colorTile(grid_tile, current_color)
     }
 }
@@ -53,7 +62,10 @@ function tileHover(event){
 function tileClick(event){
     grid_tile = event.target
     if (current_mode == 'rainbow') setRandomColor()
-    if (current_mode == 'eraser') current_color = 'white'
+    if (current_mode == 'eraser') {
+        eraseTile(grid_tile)
+        return
+    }
     colorTile(grid_tile, current_color)
 }
 
@@ -95,7 +107,7 @@ function changeMode(new_mode){
 function clearGrid(){
     const grid_tiles = Array.from(grid_container.children)
     grid_tiles.forEach((grid_tile) => {
-        grid_tile.style.backgroundColor = 'white'
+        eraseTile(grid_tile)
     })
 }
 
