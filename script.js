@@ -103,6 +103,10 @@ function initializeGridTiles(){
         grid_tile.addEventListener('click', (event) => {
             tileClick(event)
         })
+
+        grid_tile.addEventListener('dragstart', (event) => {
+            event.preventDefault()
+        })
     })
 }
 
